@@ -74,4 +74,7 @@ RUN pip3 install jupyterlab  && \
 EXPOSE 6006 
 EXPOSE 8888
 
+# Change login shell to bash
+RUN chsh -s /usr/bin/bash
+
 CMD ["/bin/sh" "-c" "jupyter lab --allow-root --ip=0.0.0.0 --no-browser --ServerApp.trust_xheaders=True --ServerApp.disable_check_xsrf=False --ServerApp.allow_remote_access=True --ServerApp.allow_origin='*' --ServerApp.allow_credentials=True"]
