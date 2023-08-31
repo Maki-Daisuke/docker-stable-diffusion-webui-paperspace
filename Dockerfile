@@ -62,7 +62,8 @@ RUN pip3 install python-socketio                                                
     rm -rf /root/.cache/pip
 
 # Install Jupyter
-RUN pip3 install jupyterlab
+RUN pip3 install jupyterlab  && \
+    rm -rf /root/.cache/pip
 EXPOSE 6006 
 EXPOSE 8888
 
