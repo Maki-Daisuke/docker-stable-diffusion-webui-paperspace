@@ -22,12 +22,12 @@ RUN pip3 install torch torchvision torchaudio --index-url https://download.pytor
 # Install Stable-Diffusion-WebUI, recommended extensions, their requirements, and also ControlNet models.
 # (python-socketio is required by Civitai extension)
 RUN pip3 install python-socketio                                                                                && \
-    git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git                                       && \
+    git clone --depth 1 https://github.com/AUTOMATIC1111/stable-diffusion-webui.git                             && \
     cd stable-diffusion-webui/extensions                                                                        && \
-    git clone https://github.com/civitai/sd_civitai_extension.git civitai                                       && \
-    git clone https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git tagcomplete                         && \
-    git clone https://github.com/zanllp/sd-webui-infinite-image-browsing.git infinite-image-browsing            && \
-    git clone https://github.com/Mikubill/sd-webui-controlnet.git controlnet                                    && \
+    git clone --depth 1 https://github.com/civitai/sd_civitai_extension.git civitai                             && \
+    git clone --depth 1 https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git tagcomplete               && \
+    git clone --depth 1 https://github.com/zanllp/sd-webui-infinite-image-browsing.git infinite-image-browsing  && \
+    git clone --depth 1 https://github.com/Mikubill/sd-webui-controlnet.git controlnet                          && \
     cd controlnet/models                                                                                        && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11e_sd15_ip2p.pth              && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11e_sd15_ip2p.yaml             && \
