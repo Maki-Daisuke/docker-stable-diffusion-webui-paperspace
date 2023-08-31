@@ -19,7 +19,7 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118  && \
     rm -rf /root/.cache/pip
 
-# Install Stable-Diffusion-WebUI, recommended extensions and their requirements
+# Install Stable-Diffusion-WebUI, recommended extensions, their requirements, and also ControlNet models.
 # (python-socketio is required by Civitai extension)
 RUN pip3 install python-socketio                                                                                && \
     git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git                                       && \
