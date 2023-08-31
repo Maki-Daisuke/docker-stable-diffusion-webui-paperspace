@@ -19,7 +19,7 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118  && \
     rm -rf /root/.cache/pip
 
-# Install Stable-Diffusion-WebUI, recommended extensions, their requirements, and also ControlNet models.
+# Install Stable-Diffusion-WebUI, recommended extensions, and their requirements.
 # (python-socketio is required by Civitai extension)
 RUN pip3 install python-socketio                                                                                && \
     git clone --depth 1 https://github.com/AUTOMATIC1111/stable-diffusion-webui.git                             && \
@@ -28,7 +28,12 @@ RUN pip3 install python-socketio                                                
     git clone --depth 1 https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git tagcomplete               && \
     git clone --depth 1 https://github.com/zanllp/sd-webui-infinite-image-browsing.git infinite-image-browsing  && \
     git clone --depth 1 https://github.com/Mikubill/sd-webui-controlnet.git controlnet                          && \
-    cd controlnet/models                                                                                        && \
+    cd ..                                                                                                       && \
+    COMMANDLINE_ARGS=--skip-torch-cuda-test python3 -c "import launch; launch.prepare_environment()"            && \
+    rm -rf /root/.cache/pip
+
+# Download ControlNet models
+RUN cd /root/stable-diffusion-webui/extensions/controlnet/models                                                && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11e_sd15_ip2p.pth              && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11e_sd15_ip2p.yaml             && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11e_sd15_shuffle.pth           && \
@@ -56,10 +61,12 @@ RUN pip3 install python-socketio                                                
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_softedge.pth          && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_softedge.yaml         && \
     wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15s2_lineart_anime.pth   && \
-    wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15s2_lineart_anime.yaml  && \
-    cd /root/stable-diffusion-webui                                                                             && \
-    COMMANDLINE_ARGS=--skip-torch-cuda-test python3 -c "import launch; launch.prepare_environment()"            && \
-    rm -rf /root/.cache/pip
+    wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15s2_lineart_anime.yaml
+
+# Download SDXL-1.0 models
+RUN cd /root/stable-diffusion-webui/models/Stable-diffusion                                   && \
+    wget -O sdXL_v10VAEFix.safetensors        https://civitai.com/api/download/models/128078  && \
+    wget -O sdXL_v10RefinerVAEFix.safetensors https://civitai.com/api/download/models/128080
 
 # Install Jupyter
 RUN pip3 install jupyterlab  && \
