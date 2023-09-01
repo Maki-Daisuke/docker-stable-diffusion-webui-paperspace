@@ -30,7 +30,8 @@ RUN pip3 install python-socketio                                                
     git clone --depth 1 https://github.com/Mikubill/sd-webui-controlnet.git controlnet                          && \
     cd ..                                                                                                       && \
     COMMANDLINE_ARGS=--skip-torch-cuda-test python3 -c "import launch; launch.prepare_environment()"            && \
-    rm -rf /root/.cache/pip
+    cd ..                                                                                                       && \
+    rm -rf stable-diffusion-webui /root/.cache/pip
 
 # Install Jupyter
 RUN pip3 install jupyterlab  && \
